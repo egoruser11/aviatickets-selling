@@ -1,0 +1,59 @@
+name: avia-ticket-selling
+
+services:
+    app:
+        image: avia-ticket-selling-php:local
+        build:
+            context: .
+            dockerfile: ./docker/app/Dockerfile
+        env_file:
+            - .env
+        environment:
+            APP_URL: http://localhost:8877
+            DB_CONNECTION: pgsql
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_DATABASE: avia_tickets
+            DB_USERNAME: avia_user
+            DB_PASSWORD: avia_password
+            QUEUE_CONNECTION: sync
+        volumes:
+            - ./:/var/www
+        command: php-fpm
+        expose:
+            - "9000"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        container_name: avia-ticket-selling-app
+
+    nginx:
+        image: nginx:1.29-alpine
+        volumes:
+            - ./:/var/www:ro
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+        ports:
+            - "8877:80"
+        depends_on:
+            - app
+        container_name: avia-ticket-selling-nginx
+
+    postgres:
+        image: postgres:17-alpine
+        environment:
+            POSTGRES_DB: avia_tickets
+            POSTGRES_USER: avia_user
+            POSTGRES_PASSWORD: avia_password
+        ports:
+            - "5433:5432"
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U avia_user -d avia_tickets"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        container_name: avia-ticket-selling-postgres
+
+volumes:
+    postgres-data:
