@@ -6,15 +6,19 @@
     <title>@yield('title', 'Система продажи авиабилетов')</title>
     <style>
         :root {
-            --bg: #f6f7fb;
+            --bg: #f3f3f4;
             --panel: #ffffff;
-            --ink: #172033;
-            --muted: #637083;
-            --line: #d9e0ea;
-            --brand: #0f766e;
-            --brand-strong: #0b5f59;
-            --danger: #b42318;
-            --soft: #eef7f6;
+            --ink: #18181b;
+            --muted: #68686f;
+            --line: #d6d6da;
+            --brand: #c1121f;
+            --brand-strong: #950f18;
+            --danger: #b91c1c;
+            --soft: #fdf0f1;
+            --dark: #151518;
+            --dark-soft: #242428;
+            --success: #166534;
+            --success-soft: #ecfdf3;
         }
 
         * {
@@ -25,7 +29,7 @@
             margin: 0;
             background: var(--bg);
             color: var(--ink);
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
             font-size: 15px;
             letter-spacing: 0;
         }
@@ -40,8 +44,9 @@
         }
 
         .topbar {
-            background: var(--panel);
-            border-bottom: 1px solid var(--line);
+            background: var(--dark);
+            border-bottom: 1px solid #34343a;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
         }
 
         .topbar-inner,
@@ -59,10 +64,25 @@
         }
 
         .brand {
-            color: var(--ink);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
             font-size: 20px;
             font-weight: 700;
             white-space: nowrap;
+        }
+
+        .brand::before {
+            width: 8px;
+            height: 28px;
+            background: var(--brand);
+            content: "";
+        }
+
+        .brand:hover {
+            color: #ffffff;
+            text-decoration: none;
         }
 
         .nav {
@@ -78,10 +98,10 @@
             align-items: center;
             justify-content: center;
             min-height: 36px;
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            background: var(--panel);
-            color: var(--ink);
+            border: 1px solid #45454c;
+            border-radius: 4px;
+            background: var(--dark-soft);
+            color: #f4f4f5;
             padding: 7px 11px;
             font-weight: 600;
             cursor: pointer;
@@ -94,7 +114,7 @@
             justify-content: center;
             min-height: 38px;
             border: 1px solid var(--line);
-            border-radius: 6px;
+            border-radius: 4px;
             background: var(--panel);
             color: var(--ink);
             padding: 8px 12px;
@@ -109,8 +129,28 @@
             color: #ffffff;
         }
 
+        .nav a:hover,
+        .nav button:hover {
+            border-color: #707078;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            border-color: var(--brand);
+            color: var(--brand-strong);
+            text-decoration: none;
+        }
+
+        .button.primary:hover {
+            background: var(--brand-strong);
+            border-color: var(--brand-strong);
+            color: #ffffff;
+        }
+
         .button.danger {
             color: var(--danger);
+            border-color: #fecaca;
+            background: #fff5f5;
         }
 
         .nav-form {
@@ -125,10 +165,10 @@
         }
 
         .user-chip {
-            border: 1px solid var(--line);
+            border: 1px solid #494950;
             border-radius: 999px;
-            background: #f8fafc;
-            color: var(--muted);
+            background: #29292e;
+            color: #f4f4f5;
             padding: 7px 11px;
             font-size: 13px;
             font-weight: 700;
@@ -136,18 +176,21 @@
         }
 
         .nav button.logout-button {
-            border-color: transparent;
-            background: #f8fafc;
-            color: var(--muted);
+            border-color: #494950;
+            background: #29292e;
+            color: #f4f4f5;
         }
 
         .nav button.logout-button:hover {
-            color: var(--danger);
+            border-color: var(--brand);
+            background: var(--brand);
+            color: #ffffff;
         }
 
         .admin-strip {
-            border-top: 1px solid #eef2f7;
-            background: #f8fafc;
+            border-top: 1px solid #34343a;
+            border-bottom: 1px solid #34343a;
+            background: #202024;
         }
 
         .admin-strip-inner {
@@ -161,7 +204,7 @@
         }
 
         .admin-strip-label {
-            color: var(--muted);
+            color: #a1a1aa;
             font-size: 13px;
             font-weight: 700;
             margin-right: 4px;
@@ -172,8 +215,8 @@
             display: inline-flex;
             align-items: center;
             min-height: 30px;
-            border-radius: 6px;
-            color: var(--ink);
+            border-radius: 4px;
+            color: #f4f4f5;
             padding: 5px 9px;
             font-size: 13px;
             font-weight: 700;
@@ -183,6 +226,16 @@
         .admin-strip a.active {
             background: var(--brand);
             color: #ffffff;
+        }
+
+        .admin-strip a:hover {
+            background: #34343a;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .admin-strip a.active:hover {
+            background: var(--brand-strong);
         }
 
         .button.small {
@@ -222,9 +275,11 @@
         .section {
             background: var(--panel);
             border: 1px solid var(--line);
-            border-radius: 8px;
+            border-top: 3px solid var(--dark);
+            border-radius: 4px;
             padding: 20px;
             margin-bottom: 18px;
+            box-shadow: 0 8px 20px rgba(24, 24, 27, 0.05);
         }
 
         .grid {
@@ -260,11 +315,28 @@
             width: 100%;
             min-height: 40px;
             border: 1px solid var(--line);
-            border-radius: 6px;
+            border-radius: 4px;
             background: #ffffff;
             color: var(--ink);
             padding: 8px 10px;
             font: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--brand);
+            outline: 3px solid rgba(193, 18, 31, 0.14);
+            outline-offset: 1px;
+        }
+
+        input[readonly],
+        input:disabled,
+        select:disabled,
+        textarea[readonly],
+        textarea:disabled {
+            background: #f0f0f1;
+            color: var(--muted);
         }
 
         textarea {
@@ -305,9 +377,13 @@
         }
 
         th {
-            background: #f0f4f8;
-            color: #27364b;
+            background: var(--dark);
+            color: #ffffff;
             font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background: #fff7f7;
         }
 
         tr:last-child td {
@@ -326,14 +402,15 @@
 
         .flash,
         .errors {
-            border-radius: 8px;
+            border-radius: 4px;
             padding: 12px 14px;
             margin-bottom: 18px;
         }
 
         .flash {
-            background: var(--soft);
-            border: 1px solid #b9dfda;
+            background: var(--success-soft);
+            border: 1px solid #bbf7d0;
+            color: var(--success);
         }
 
         .errors {
@@ -346,8 +423,8 @@
             display: inline-flex;
             align-items: center;
             border-radius: 999px;
-            background: #eef2f7;
-            color: #27364b;
+            background: #eeeeef;
+            color: #3f3f46;
             padding: 4px 9px;
             font-size: 13px;
             font-weight: 700;
@@ -359,14 +436,15 @@
         }
 
         .badge.success {
-            background: var(--soft);
-            color: var(--brand-strong);
+            background: var(--success-soft);
+            color: var(--success);
         }
 
         .notice {
-            background: #f8fafc;
+            background: #fafafa;
             border: 1px solid var(--line);
-            border-radius: 8px;
+            border-left: 4px solid var(--brand);
+            border-radius: 4px;
             padding: 14px;
         }
 
@@ -399,10 +477,17 @@
             display: block;
             min-height: 118px;
             border: 1px solid var(--line);
-            border-radius: 8px;
+            border-radius: 4px;
             background: var(--panel);
             padding: 18px;
             color: var(--ink);
+            box-shadow: 0 8px 20px rgba(24, 24, 27, 0.05);
+        }
+
+        .menu-link:hover {
+            border-color: var(--brand);
+            color: var(--brand-strong);
+            text-decoration: none;
         }
 
         .menu-link strong {
@@ -415,7 +500,7 @@
             max-height: 430px;
             overflow: auto;
             border: 1px solid var(--line);
-            border-radius: 8px;
+            border-radius: 4px;
         }
 
         .scroll-table table {
@@ -430,7 +515,8 @@
         }
 
         .summary span {
-            background: #eef2f7;
+            border-left: 3px solid var(--brand);
+            background: #eeeeef;
             border-radius: 999px;
             padding: 8px 12px;
             font-weight: 700;
